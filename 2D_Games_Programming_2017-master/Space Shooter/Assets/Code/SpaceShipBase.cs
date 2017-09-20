@@ -13,8 +13,10 @@ namespace SpaceShooter
 		private float _speed = 1.5f;
 
 		private Weapon[] _weapons;
+        private Projectile _damage;
+        private Health _health;
 
-		public float Speed
+        public float Speed
 		{
 			get { return _speed; }
 			protected set { _speed = value; }
@@ -55,5 +57,31 @@ namespace SpaceShooter
 				Debug.LogException(exception);
 			}
 		}
-	}
+
+        //When Spaceships collide with something they take famage
+        void OnTriggerEnter2D(Collider2D collision)
+        {
+
+            // if Collision with game object = true: take damage
+            if (collision.gameObject)
+            {
+                //Getting damage from Projectile doesn't work and don't know was it requirements
+                _damage = GetComponent<Projectile>();//Damage that is done to the ships
+                _health = GetComponent<Health>();   //Current Healt of the ship that is collided
+
+                //Debuggin the value of the _damage
+                Debug.Log(_damage);
+
+                //check if _health is null or not
+                if (_health != null)
+                {
+                    //Decreases health amount of damage
+                   _health.DecreaseHealth(30); // Change the value to _damage variable when you get things to work.
+                }
+
+                //Destroy projectiles when you hit the enemyship and player if collides with enemy
+                //Destroy(collision.gameObject);
+            }
+        }
+    }
 }

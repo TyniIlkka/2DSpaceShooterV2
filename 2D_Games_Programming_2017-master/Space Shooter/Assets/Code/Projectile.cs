@@ -7,7 +7,7 @@ namespace SpaceShooter
 	public class Projectile : MonoBehaviour, IDamageProvider
 	{
 		[SerializeField]
-		private int _damage;
+		public int _damage;
 		[SerializeField]
 		private float _speed;
 
@@ -15,7 +15,16 @@ namespace SpaceShooter
 		private Vector2 _direction;
 		private bool _isLaunched = false;
 
-		protected virtual void Awake()
+        int IDamageProvider.GetDamage
+        {
+            get
+            {
+                int dmg = _damage;
+                return dmg;
+            }
+        }
+
+        protected virtual void Awake()
 		{
 			_rigidbody = GetComponent<Rigidbody2D>();
 
@@ -46,9 +55,9 @@ namespace SpaceShooter
 			_isLaunched = true;
 		}
 
-		public int GetDamage()
-		{
-			return _damage;
-		}
+		//public int GetDamage()
+		//{
+			
+		//}
 	}
 }
